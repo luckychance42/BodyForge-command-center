@@ -235,6 +235,128 @@ $("convertBtn").addEventListener("click", async () => {
   $("convertBtn").textContent = "Already converted";
 });
 
+$("atlasAnalyzeBtn").addEventListener("click", async () => {
+  const intake = state.activeIntake;
+  if (!intake) return;
+
+  const btn = $("atlasAnalyzeBtn");
+
+  btn.disabled = true;
+  btn.textContent = "Atlas analyzing…";
+  message($("dialogMessage"), "Atlas is reviewing this intake…");
+
+  try {
+    const response = await fetch("/.netlify/functions/analyze-intake", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        intake,
+      }),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+      throw new Error(
+        result.error || "Atlas could not analyze this intake."
+      );
+    }
+
+    const a = result.analysis;
+
+    const riskFlags = (a.risk_flags || [])
+      .map(flag => `
+        <div class="detail wide">
+          <small>${esc(flag.severity.toUpperCase())} — ${esc(flag.title)}</small>
+          <span>${esc(flag.reason)}</span>
+        </div>
+      `)
+      .join("");
+
+    const questions = (a.consultation_questions || [])
+      .map(q => `<li>${esc(q)}</li>`)
+      .join("");
+
+    const actions = (a.recommended_actions || [])
+      .map(item => `
+        <li>
+          <strong>${esc(item.action)}</strong>
+          — ${esc(item.reason)}
+        </li>
+      `)
+      .join("");
+
+    const training = (a.training_considerations || [])
+      .map(item => `
+        <li>
+          ${esc(item.observation)}
+          <small> (${esc(item.confidence)}% confidence)</small>
+        </li>
+      `)
+      .join("");
+
+    const existingAtlas = document.getElementById("atlasAnalysis");
+    if (existingAtlas) existingAtlas.remove();
+
+    const atlasSection = document.createElement("section");
+    atlasSection.id = "atlasAnalysis";
+    atlasSection.className = "detail-section";
+
+    atlasSection.innerHTML = `
+      <h3>Atlas Client Intelligence</h3>
+
+      <div class="detail-grid">
+        ${detail("Readiness score", `${a.readiness_score}/100`)}
+        ${detail("AI confidence", `${a.confidence_score}/100`)}
+        ${detail("Primary goal", a.primary_goal, true)}
+        ${detail("Atlas summary", a.summary, true)}
+      </div>
+
+      <h3>Risk & Review Flags</h3>
+      <div class="detail-grid">
+        ${riskFlags || detail("Risk flags", "No major flags identified.", true)}
+      </div>
+
+      <h3>Consultation Questions</h3>
+      <ul>
+        ${questions || "<li>No additional questions suggested.</li>"}
+      </ul>
+
+      <h3>Recommended Actions</h3>
+      <ul>
+        ${actions || "<li>No actions suggested.</li>"}
+      </ul>
+
+      <h3>Training Considerations</h3>
+      <ul>
+        ${training || "<li>No additional considerations.</li>"}
+      </ul>
+    `;
+
+    $("dialogBody").prepend(atlasSection);
+
+    message(
+      $("dialogMessage"),
+      `Atlas analysis complete. Confidence: ${a.confidence_score}/100.`
+    );
+
+  } catch (error) {
+    console.error(error);
+
+    message(
+      $("dialogMessage"),
+      error.message || "Atlas analysis failed.",
+      true
+    );
+
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Analyze with Atlas";
+  }
+});
+
 db.auth.onAuthStateChange((_event, session) => {
   if (!session && state.user) showLogin();
 });

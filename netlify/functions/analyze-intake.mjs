@@ -168,6 +168,10 @@ All recommendations are suggestions for the trainer to review.
 `;
 
         // Ask Atlas to return a predictable JSON report.
+        console.log("Atlas: starting OpenAI request", {
+  client: sanitizedIntake.name,
+  timestamp: new Date().toISOString(),
+});
     const structuredResponse = await openai.responses.create({
       model: "gpt-4.1-mini",
       store: false,
@@ -331,6 +335,11 @@ All recommendations are suggestions for the trainer to review.
         },
       },
     });
+
+    console.log("Atlas: OpenAI response received", {
+  client: sanitizedIntake.name,
+  timestamp: new Date().toISOString(),
+});
 
         const analysis = JSON.parse(structuredResponse.output_text);
 

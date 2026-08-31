@@ -169,7 +169,7 @@ All recommendations are suggestions for the trainer to review.
 
         // Ask Atlas to return a predictable JSON report.
     const structuredResponse = await openai.responses.create({
-      model: "gpt-5-mini",
+      model: "gpt-4.1-mini",
       store: false,
 
       instructions: atlasInstructions,

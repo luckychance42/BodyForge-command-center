@@ -1,137 +1,307 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex,nofollow">
-  <title>Owner Dashboard | Big Sky BodyForge</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Big Sky BodyForge client intake and fitness consultation form." />
+  <title>Client Intake | Big Sky BodyForge</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./admin.css">
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <div class="ambient one"></div>
-  <div class="ambient two"></div>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="Big Sky BodyForge home">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" role="img">
+          <path d="M5 49 23 22l8 12L41 17l18 32H5Z"></path>
+          <path class="ridge" d="m14 49 15-20 7 10 6-9 13 19"></path>
+        </svg>
+      </div>
+      <div>
+        <span class="brand-kicker">BIG SKY</span>
+        <span class="brand-name">BODYFORGE</span>
+      </div>
+    </a>
+    <span class="secure-pill">Secure intake</span>
+  </header>
 
   <main>
-    <section id="loginView" class="login-view">
-      <div class="login-card">
-        <a class="brand" href="../">
-          <span class="mark">BF</span>
-          <span><small>BIG SKY</small><strong>BODYFORGE</strong></span>
-        </a>
-        <p class="eyebrow">OWNER ACCESS</p>
-        <h1>Command Center</h1>
-        <p class="muted">Sign in with the Supabase owner account connected to Big Sky BodyForge.</p>
-
-        <form id="loginForm">
-          <label>Email
-            <input id="email" type="email" autocomplete="email" value="chancedb42@gmail.com" required>
-          </label>
-          <label>Password
-            <input id="password" type="password" autocomplete="current-password" required>
-          </label>
-          <div id="loginError" class="message error" hidden></div>
-          <button id="loginBtn" type="submit">Sign in</button>
-        </form>
-        <p class="login-help">Your password is never stored in this website. Authentication is handled directly by Supabase.</p>
+    <section class="hero">
+      <p class="eyebrow">PERSONAL TRAINING • HELENA, MONTANA</p>
+      <h1>Build a stronger body.<br><span>Forge a stronger life.</span></h1>
+      <p class="hero-copy">
+        Tell us where you are, where you want to go, and what may affect your training.
+        This intake helps Big Sky BodyForge prepare a safer, more focused consultation.
+      </p>
+      <div class="hero-points">
+        <span>About 6–8 minutes</span>
+        <span>Private and secure</span>
+        <span>No payment required</span>
       </div>
     </section>
 
-    <section id="dashboardView" class="dashboard" hidden>
-      <aside class="sidebar">
-        <a class="brand" href="../">
-          <span class="mark">BF</span>
-          <span><small>BIG SKY</small><strong>BODYFORGE</strong></span>
-        </a>
-        <nav>
-          <button class="nav-item active" data-view="intakes"><span>Intakes</span><b id="navIntakeCount">0</b></button>
-          <button class="nav-item" data-view="clients"><span>Clients</span><b id="navClientCount">0</b></button>
-        </nav>
-        <div class="sidebar-bottom">
-          <p id="ownerEmail"></p>
-          <button id="signOutBtn" class="ghost">Sign out</button>
-        </div>
-      </aside>
-
-      <div class="content">
-        <header class="topbar">
-          <div>
-            <p class="eyebrow">OWNER DASHBOARD</p>
-            <h1 id="pageTitle">Client Intakes</h1>
-          </div>
-          <div class="top-actions">
-            <button id="refreshBtn" class="ghost">Refresh</button>
-            <a href="../" target="_blank" class="primary-link">Open intake form</a>
-          </div>
-        </header>
-
-        <section class="stats">
-          <article><span>New submissions</span><strong id="submittedCount">0</strong></article>
-          <article><span>Needs review</span><strong id="reviewCount">0</strong></article>
-          <article><span>Converted</span><strong id="convertedCount">0</strong></article>
-          <article><span>Total clients</span><strong id="clientCount">0</strong></article>
-        </section>
-
-        <section id="intakesView" class="panel">
-          <div class="panel-head">
-            <div>
-              <h2>Intake queue</h2>
-              <p>Review health disclosures, goals, availability, and consents before conversion.</p>
-            </div>
-            <select id="statusFilter" aria-label="Filter intakes by status">
-              <option value="all">All statuses</option>
-              <option value="submitted">Submitted</option>
-              <option value="reviewing">Reviewing</option>
-              <option value="approved">Approved</option>
-              <option value="converted">Converted</option>
-              <option value="declined">Declined</option>
-            </select>
-          </div>
-          <div id="intakeList" class="list"></div>
-          <div id="intakeEmpty" class="empty" hidden>No intakes match this filter.</div>
-        </section>
-
-        <section id="clientsView" class="panel" hidden>
-          <div class="panel-head">
-            <div>
-              <h2>Clients</h2>
-              <p>Converted and manually created client profiles.</p>
-            </div>
-          </div>
-          <div id="clientList" class="list"></div>
-          <div id="clientEmpty" class="empty" hidden>No clients found.</div>
-        </section>
+    <section class="form-shell" aria-labelledby="form-title">
+      <div class="progress-wrap" aria-hidden="true">
+        <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+        <div class="progress-label"><span id="stepLabel">Step 1 of 5</span><span id="stepName">Contact</span></div>
       </div>
+
+      <form id="intakeForm" novalidate>
+        <input class="honeypot" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <section class="form-step active" data-step="1">
+          <div class="section-heading">
+            <p class="section-number">01</p>
+            <div>
+              <h2 id="form-title">Start with the basics</h2>
+              <p>How should we contact you about your consultation?</p>
+            </div>
+          </div>
+
+          <div class="grid two">
+            <label>
+              <span>First name *</span>
+              <input name="first_name" autocomplete="given-name" maxlength="100" required>
+            </label>
+            <label>
+              <span>Last name *</span>
+              <input name="last_name" autocomplete="family-name" maxlength="100" required>
+            </label>
+            <label>
+              <span>Email</span>
+              <input name="email" type="email" autocomplete="email" maxlength="320" placeholder="name@example.com">
+            </label>
+            <label>
+              <span>Phone</span>
+              <input name="phone" type="tel" autocomplete="tel" maxlength="50" placeholder="(406) 555-0123">
+            </label>
+          </div>
+
+          <fieldset>
+            <legend>Preferred contact method</legend>
+            <div class="choice-row">
+              <label class="choice-card"><input type="radio" name="preferred_contact" value="text" checked><span>Text</span></label>
+              <label class="choice-card"><input type="radio" name="preferred_contact" value="email"><span>Email</span></label>
+              <label class="choice-card"><input type="radio" name="preferred_contact" value="phone"><span>Phone</span></label>
+            </div>
+          </fieldset>
+          <p class="field-hint">At least one contact method—email or phone—is required.</p>
+        </section>
+
+        <section class="form-step" data-step="2">
+          <div class="section-heading">
+            <p class="section-number">02</p>
+            <div>
+              <h2>Your goals</h2>
+              <p>Describe the outcome that matters most right now.</p>
+            </div>
+          </div>
+
+          <label>
+            <span>Primary fitness goal *</span>
+            <textarea name="primary_goal" rows="4" maxlength="2000" required placeholder="Example: Lose 20 pounds, improve energy, and establish a sustainable training routine."></textarea>
+          </label>
+
+          <fieldset>
+            <legend>Other goals</legend>
+            <div class="check-grid">
+              <label><input type="checkbox" name="secondary_goals" value="Build strength"><span>Build strength</span></label>
+              <label><input type="checkbox" name="secondary_goals" value="Lose body fat"><span>Lose body fat</span></label>
+              <label><input type="checkbox" name="secondary_goals" value="Improve mobility"><span>Improve mobility</span></label>
+              <label><input type="checkbox" name="secondary_goals" value="Increase endurance"><span>Increase endurance</span></label>
+              <label><input type="checkbox" name="secondary_goals" value="Improve confidence"><span>Improve confidence</span></label>
+              <label><input type="checkbox" name="secondary_goals" value="Train for an event"><span>Train for an event</span></label>
+            </div>
+          </fieldset>
+
+          <div class="grid two">
+            <label>
+              <span>Target date</span>
+              <input name="target_date" type="date">
+            </label>
+            <label>
+              <span>Training experience</span>
+              <select name="training_experience">
+                <option value="">Select one</option>
+                <option>New to structured exercise</option>
+                <option>Some experience</option>
+                <option>Consistent for 1–2 years</option>
+                <option>Experienced athlete or lifter</option>
+                <option>Returning after time away</option>
+              </select>
+            </label>
+          </div>
+        </section>
+
+        <section class="form-step" data-step="3">
+          <div class="section-heading">
+            <p class="section-number">03</p>
+            <div>
+              <h2>Training preferences</h2>
+              <p>Help us design an approach that fits your actual life.</p>
+            </div>
+          </div>
+
+          <fieldset>
+            <legend>General availability</legend>
+            <div class="check-grid">
+              <label><input type="checkbox" name="availability" value="Weekday mornings"><span>Weekday mornings</span></label>
+              <label><input type="checkbox" name="availability" value="Weekday afternoons"><span>Weekday afternoons</span></label>
+              <label><input type="checkbox" name="availability" value="Weekday evenings"><span>Weekday evenings</span></label>
+              <label><input type="checkbox" name="availability" value="Saturday mornings"><span>Saturday mornings</span></label>
+              <label><input type="checkbox" name="availability" value="Saturday afternoons"><span>Saturday afternoons</span></label>
+              <label><input type="checkbox" name="availability" value="Flexible"><span>Flexible</span></label>
+            </div>
+          </fieldset>
+
+          <div class="grid two">
+            <label>
+              <span>Preferred location</span>
+              <select name="preferred_training_location">
+                <option value="">Select one</option>
+                <option>Gym</option>
+                <option>Outdoors</option>
+                <option>At home</option>
+                <option>Online coaching</option>
+                <option>Open to recommendations</option>
+              </select>
+            </label>
+            <label>
+              <span>How did you hear about us?</span>
+              <select name="source">
+                <option value="">Select one</option>
+                <option>Facebook</option>
+                <option>Instagram</option>
+                <option>Google</option>
+                <option>Friend or family</option>
+                <option>Business card or flyer</option>
+                <option>Local community group</option>
+                <option>Other</option>
+              </select>
+            </label>
+          </div>
+
+          <label>
+            <span>Referral or source details</span>
+            <input name="referral_detail" maxlength="500" placeholder="Person's name, group, post, or other details">
+          </label>
+        </section>
+
+        <section class="form-step" data-step="4">
+          <div class="section-heading">
+            <p class="section-number">04</p>
+            <div>
+              <h2>Health and safety</h2>
+              <p>Disclose anything that may affect exercise selection or intensity.</p>
+            </div>
+          </div>
+
+          <label>
+            <span>Medical conditions</span>
+            <textarea name="medical_conditions" rows="3" placeholder="List relevant diagnosed conditions, or write None."></textarea>
+          </label>
+          <label>
+            <span>Current medications</span>
+            <textarea name="medications" rows="3" placeholder="List medications that may affect exercise, or write None."></textarea>
+          </label>
+          <label>
+            <span>Injuries, pain, or physical limitations</span>
+            <textarea name="injuries_or_limitations" rows="3" placeholder="Include recent or recurring issues, or write None."></textarea>
+          </label>
+
+          <label class="toggle-line">
+            <input type="checkbox" name="physician_clearance_required">
+            <span>
+              <strong>I believe physician clearance may be needed before beginning training.</strong>
+              <small>This does not replace professional medical screening.</small>
+            </span>
+          </label>
+
+          <div class="subcard">
+            <h3>Emergency contact</h3>
+            <div class="grid two">
+              <label><span>Name</span><input name="emergency_name" maxlength="150"></label>
+              <label><span>Phone</span><input name="emergency_phone" type="tel" maxlength="50"></label>
+              <label class="full"><span>Relationship</span><input name="emergency_relationship" maxlength="100"></label>
+            </div>
+          </div>
+        </section>
+
+        <section class="form-step" data-step="5">
+          <div class="section-heading">
+            <p class="section-number">05</p>
+            <div>
+              <h2>Review and consent</h2>
+              <p>Please read each statement before submitting.</p>
+            </div>
+          </div>
+
+          <label>
+            <span>Full legal name *</span>
+            <input name="signer_name" autocomplete="name" maxlength="200" required>
+          </label>
+
+          <div class="consent-list">
+            <label class="consent-card">
+              <input type="checkbox" name="consent_privacy" required>
+              <span><strong>Privacy consent *</strong>I authorize Big Sky BodyForge to collect and use the information in this form for client screening, consultation preparation, scheduling, and coaching administration.</span>
+            </label>
+            <label class="consent-card">
+              <input type="checkbox" name="consent_training_risk" required>
+              <span><strong>Training-risk acknowledgment *</strong>I understand that physical exercise carries inherent risks and that I am responsible for reporting symptoms, pain, injuries, medical restrictions, and changes in health status.</span>
+            </label>
+            <label class="consent-card">
+              <input type="checkbox" name="consent_medical" required>
+              <span><strong>Medical-disclosure confirmation *</strong>I confirm that the health information provided is accurate to the best of my knowledge and understand that personal training is not medical diagnosis or treatment.</span>
+            </label>
+            <label class="consent-card">
+              <input type="checkbox" name="consent_communications">
+              <span><strong>Communications consent</strong>I agree to receive scheduling and service-related messages by my selected contact method.</span>
+            </label>
+            <label class="consent-card">
+              <input type="checkbox" name="consent_photo">
+              <span><strong>Photo/video permission</strong>I permit progress photos or videos only when separately arranged and understood. This permission may be withdrawn.</span>
+            </label>
+          </div>
+
+          <p class="legal-note">
+            This intake is a preliminary screening tool, not medical advice, diagnosis, treatment, or a substitute for professional healthcare.
+            Final participation may require additional screening or physician clearance.
+          </p>
+        </section>
+
+        <div id="formError" class="form-message error" role="alert" hidden></div>
+
+        <div class="form-actions">
+          <button type="button" id="backBtn" class="btn secondary" hidden>Back</button>
+          <button type="button" id="nextBtn" class="btn primary">Continue</button>
+          <button type="submit" id="submitBtn" class="btn primary" hidden>
+            <span class="button-text">Submit intake</span>
+            <span class="spinner" aria-hidden="true"></span>
+          </button>
+        </div>
+      </form>
+
+      <section id="successPanel" class="success-panel" hidden>
+        <div class="success-icon">✓</div>
+        <p class="eyebrow">INTAKE RECEIVED</p>
+        <h2>Thank you. Your next step starts here.</h2>
+        <p>Your information was submitted securely. Big Sky BodyForge will review it and contact you using your preferred method.</p>
+        <p class="confirmation" id="confirmationCode"></p>
+      </section>
     </section>
   </main>
 
-  <dialog id="intakeDialog">
-    <div class="dialog-head">
-      <div>
-        <p class="eyebrow">INTAKE REVIEW</p>
-        <h2 id="dialogName">Applicant</h2>
-        <p id="dialogMeta" class="muted"></p>
-      </div>
-      <button id="closeDialog" class="icon-btn" aria-label="Close">×</button>
-    </div>
+  <footer>
+    <p>© <span id="year"></span> Big Sky BodyForge • Helena, Montana</p>
+    <p>Personal training services are not medical care.</p>
+  </footer>
 
-    <div id="dialogBody" class="dialog-body"></div>
-
-    <label class="notes-label">Private review notes
-      <textarea id="reviewNotes" rows="4" placeholder="Add notes about follow-up, clearance, or consultation readiness."></textarea>
-    </label>
-
-    <div id="dialogMessage" class="message" hidden></div>
-    <div class="dialog-actions">
-      <button id="atlasAnalyzeBtn" class="ghost">Analyze with Atlas</button>
-      <button id="saveReviewBtn" class="ghost">Save review</button>
-      <button id="convertBtn" class="convert">Convert to client</button>
-    </div>
-  </dialog>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.95.0/dist/umd/supabase.min.js"></script>
-  <script src="./admin.js"></script>
+  <script src="./app.js"></script>
 </body>
 </html>

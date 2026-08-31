@@ -40,3 +40,28 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(5px)}.dialog-he
 .message.error{background:rgba(255,180,171,.08);color:var(--danger);border-color:rgba(255,180,171,.2)}
 @media(max-width:900px){.dashboard{grid-template-columns:1fr}.sidebar{position:static;height:auto;flex-direction:row;align-items:center;gap:20px;padding:15px}.sidebar nav{display:flex;margin:0 0 0 auto}.sidebar-bottom{margin:0;padding:0;border:0}.sidebar-bottom p{display:none}.content{padding:20px}.stats{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:650px){.sidebar{flex-wrap:wrap}.sidebar nav{order:3;width:100%}.nav-item{flex:1}.topbar{align-items:flex-start;flex-direction:column}.topbar h1{font-size:2.7rem}.top-actions{width:100%}.top-actions>*{flex:1}.stats{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:1fr auto}.row .contact,.row .submitted{display:none}.panel-head{align-items:flex-start;gap:15px;flex-direction:column}.panel-head select{width:100%}.detail-grid{grid-template-columns:1fr}.wide{grid-column:auto}.dialog-actions{flex-direction:column-reverse}.dialog-actions button{width:100%}}
+/* Atlas intake dialog scrolling */
+#intakeDialog {
+  display: flex;
+  flex-direction: column;
+  max-height: 92vh;
+  overflow: hidden;
+}
+
+#intakeDialog .dialog-head {
+  flex: 0 0 auto;
+}
+
+#intakeDialog .dialog-body {
+  flex: 1 1 auto;
+  max-height: none;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+#intakeDialog .notes-label,
+#intakeDialog .message,
+#intakeDialog .dialog-actions {
+  flex: 0 0 auto;
+}
